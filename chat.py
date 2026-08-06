@@ -80,7 +80,7 @@ def load_conversation(selected_sid : str):
     print(f"[Load] session = {selected_sid}, {len(messages)} messages")
     return messages, selected_sid
 
-def delete_sellected(selected_sid: str):
+def delete_selected(selected_sid: str):
     if selected_sid:
         delete_conversation(selected_sid)
         print(f"[Delete] session={selected_sid}")
