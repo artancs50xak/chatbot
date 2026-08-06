@@ -8,8 +8,22 @@ from history import (
     get_sidebar_choices, get_messages
 )
 
-def build_messages(history: list, uset_text: str) -> list:
-    ...
+def build_messages(history: list, user_text: str) -> list:
+    messages = [{"role":"system", "content":"You are helpful assistant"}]
+    for entry in history:
+        role = entry.get("role")
+        content = entry.get("content")
+        if role in ("user", "assistant"):
+            if isinstance(content, list):
+                content =  " ".join(
+                    c.get("text", "") for c in content == "text"
+                    if isinstance(c, dict) and c.get("type")
+                )
+            if content:
+                messages.append({"role":role, "content": str(content)})
+    messages.append({"role":"user", "content": user_text})
+    return messages
+
 
 def responed(tokenizer, model, device):
     ...
