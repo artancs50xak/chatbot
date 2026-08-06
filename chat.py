@@ -49,7 +49,14 @@ def responed(tokenizer, model, device):
         return _response
 
 def handle_retry(responed_fn):
-    ...
+    def _retry(history, retry_data: gr.RetryData):
+        print(f"[Retry] prompt = {retry_data.value}")
+        yield from responed_fn(
+            {"text": retry_data.value, "files":[]},
+            history[:retry_data.index],
+            "retry",
+        )
+    return _retry
 
 def handle_like(data: gr.LikeData):
     print(f"[Like] {'👍' if data.liked else '👎'}")
