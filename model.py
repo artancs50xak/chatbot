@@ -1,5 +1,5 @@
 import torch 
-from transformer import AutoTokenizer, AutoModelForCausalLM, TextIteratorStreamer
+from transformers import AutoTokenizer, AutoModelForCausalLM, TextIteratorStreamer
 from threading import Thread
 from config import MODEL_PATH, MAX_NEW_TOKENS, TEMPERATURE, TOP_P
 
