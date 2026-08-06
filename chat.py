@@ -73,11 +73,18 @@ def handle_undo(history, undo_data: gr.UndoData):
     print(f"[Undo] index={undo_data.index}")
     return history[:undo_data.index], undo_data.value
 
-def load_conversation():
-    ...
+def load_conversation(selected_sid : str):
+    if not selected_sid:
+        return [], str(uuid4())
+    messages = get_messages(selected_sid)
+    print(f"[Load] session = {selected_sid}, {len(messages)} messages")
+    return messages, selected_sid
 
 def delete_sellected(selected_sid: str):
-    ...
+    if selected_sid:
+        delete_conversation(selected_sid)
+        print(f"[Delete] session={selected_sid}")
+    return [], str(uuid4()), gr.update(choices=get_sidebar_choices(), value=None)
 
 def refresh_sidebar():
     return gr.update(choices = get_sidebar_choices())
