@@ -21,4 +21,19 @@ def build_ui(respond_fn) -> gr.Blocks:
                     show_label=False
                 )
                 delete_btn = gr.Button("Delete selected", variant="stop", size="sm")
-                
+            with gr.Column(scale=4):
+                chatbot = gr.Chatbot(
+                    label="Qwen",
+                    avatar_images = (USER_AVATAR, BOT_AVATAR),
+                    editable="user",
+                    height=500
+                )
+
+                textbox = gr.MultimodalTextbox(
+                    placeholder="Type a message, attach a file or recor your voice...",
+                    show_label=False,
+                    file_count="multiple",
+                    file_types=["image", "audio", "video", "pdf", ".txt"],
+                    sources= ["upload", "microphone"],
+                    submit_btn=">"
+                )
