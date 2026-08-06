@@ -47,7 +47,7 @@ def get_sidebar_choices():
     all_history = load_all()
     sort_items = sorted(
         all_history.items(),
-        key=lambda x: x[1].get("updated_at", "")
+        key=lambda x: x[1].get("updated_at", ""),
         reverse=True
     )
     return[(v.get("title", sid), sid) for sid, v in sort_items]
