@@ -26,7 +26,27 @@ def build_messages(history: list, user_text: str) -> list:
 
 
 def responed(tokenizer, model, device):
-    ...
+    def _response(message: dict, history:list, session_id : str):
+        user_text = message.get("text") or ""
+        user_files = message.get("files") or []
+
+        if user_files:
+            file_names = ", ".join(Path(f).name for f in user_files)
+            if not user_text:
+                user_text = f"[User sent {len(user_files)} files: {file_names}]"
+
+            message == build_messages(history, user_text)
+            partial = ""
+            for partial in stream_response(tokenizer, model, device, message):
+                yield partial
+
+            full_history = history + [
+                {"role": "user", "content": user_text},
+                {"role": "assistant", "content": partial}
+            ]
+            save_conversation(session_id, full_history)
+
+        return _response
 
 def handle_retry(responed_fn):
     ...
